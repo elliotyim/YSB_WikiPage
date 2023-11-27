@@ -4,14 +4,13 @@ from sqlalchemy import Column, String, BigInteger
 from sqlalchemy.orm import relationship, Mapped
 
 from app.db.models import Base
+from app.db.models.post_word import PostWord
 
 
 class Word(Base):
     __tablename__ = "word"
 
-    id: int = Column(BigInteger, primary_key=True, autoincrement=True)
-    name: str = Column(String(255), nullable=False, index=True)
+    id: Mapped[int] = Column(BigInteger, primary_key=True, autoincrement=True)
+    name: Mapped[str] = Column(String(255), nullable=False, unique=True, index=True)
 
-    posts: Mapped[Set["Post"]] = relationship(
-        secondary=None, back_populates='words'
-    )
+    post_words: Mapped[Set[PostWord]] = relationship(back_populates='word')
