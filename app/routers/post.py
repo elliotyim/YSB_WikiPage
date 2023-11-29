@@ -15,6 +15,15 @@ def get_posts(
     return posts
 
 
+@router.get("/{post_id}")
+def get_post_detail(
+        post_id: int,
+        post_service: PostService = Depends()
+) -> response.PostDetail:
+    post = post_service.get_post(post_id)
+    return post
+
+
 @router.post("")
 def create_post(
         request_body: request.PostCreate,

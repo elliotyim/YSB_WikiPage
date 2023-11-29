@@ -20,3 +20,11 @@ class Post(BaseModel):
     post_id: int
     post_title: Optional[str]
     created_date: Optional[datetime]
+
+
+class PostDetail(BaseModel):
+    post_id: int
+    post_title: Optional[str]
+    post_content: Optional[str]
+    created_date: Optional[datetime]
+    related_posts: list[Post] = []

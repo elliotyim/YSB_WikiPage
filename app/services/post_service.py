@@ -32,6 +32,24 @@ class PostService:
             ) for post in posts
         ]
 
+    def get_post(self, post_id: int) -> response.PostDetail:
+        post = self.post_crud.find_post_with_post_words_by_post_id(post_id=post_id)
+        related_word_ids = [post_word.word_id for post_word in post.post_words]
+
+        related_posts = self.post_crud.find_related_posts(
+            base_post_id=post.id,
+            word_ids=related_word_ids,
+            n=self._settings.RELATED_POSTS_AT_ONCE
+        )
+
+        return response.PostDetail(
+            post_id=post.id,
+            post_title=post.title,
+            post_content=post.content,
+            created_date=post.created_at,
+            related_posts=related_posts
+        )
+
     def create_post(self, request_body: request.PostCreate) -> response.PostCreate:
         filtered_words = self.word_processor.count_related_words(
             content=request_body.content,
