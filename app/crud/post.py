@@ -56,6 +56,7 @@ class PostCrud:
             .filter(PostWord.post_id != base_post_id)
             .filter(or_((PostWord.word_id == word_id for word_id in word_ids)))
             .group_by(PostWord.post_id, Post.title, Post.created_at)
+            .having(func.count(PostWord.post_id) >= 2)
             .order_by(desc(func.count(PostWord.post_id)), PostWord.post_id)
             .limit(n)
             .all()
