@@ -21,7 +21,6 @@ class Settings(BaseSettings):
     DB_PASSWORD: str
     DB_NAME: str
 
-    SPECIAL_CHARACTERS: str = ".,\"'!?"
     REDUNDANT_RATE: float = 0.6
 
     @property

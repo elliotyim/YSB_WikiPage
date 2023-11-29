@@ -21,10 +21,20 @@ class PostService:
         self.word_processor = word_processor
         self._settings = settings
 
+    def get_posts(self, parameter: request.PostList) -> list[response.Post]:
+        posts = self.post_crud.find_posts(page=parameter.page, per_page=parameter.per_page)
+
+        return [
+            response.Post(
+                post_id=post.id,
+                post_title=post.title,
+                created_date=post.created_at
+            ) for post in posts
+        ]
+
     def create_post(self, request_body: request.PostCreate) -> response.PostCreate:
         filtered_words = self.word_processor.count_related_words(
             content=request_body.content,
-            except_special_characters=self._settings.SPECIAL_CHARACTERS,
             redundant_rate=self._settings.REDUNDANT_RATE
         )
 

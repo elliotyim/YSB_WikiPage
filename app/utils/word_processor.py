@@ -7,7 +7,6 @@ class WordProcessor:
     @staticmethod
     def count_related_words(
             content: str,
-            except_special_characters: str,
             redundant_rate: float
     ) -> dict[str, int]:
         pattern = re.compile(r'[^a-zA-Z가-힣0-9\s]')

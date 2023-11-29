@@ -29,6 +29,10 @@ class PostCrud:
 
         return existing_words + [Word(name=word) for word in word_set]
 
+    def find_posts(self, page: int, per_page: int) -> list[Post]:
+        posts = self.db.query(Post).limit(per_page).offset((page - 1) * per_page).all()
+        return posts
+
     def save_post_and_words(self, post: Post, words: list[Word]) -> list[PostWord]:
         post_words = [PostWord(post=post, word=word) for word in words]
         self.db.add_all(post_words)

@@ -6,6 +6,15 @@ from app.services.post_service import PostService
 router = APIRouter()
 
 
+@router.get("")
+def get_posts(
+        query_parameter: request.PostList = Depends(),
+        post_service: PostService = Depends()
+) -> list[response.Post]:
+    posts = post_service.get_posts(parameter=query_parameter)
+    return posts
+
+
 @router.post("")
 def create_post(
         request_body: request.PostCreate,
