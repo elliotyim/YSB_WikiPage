@@ -13,3 +13,6 @@
 ## Testing
 
 - `$ pytest`
+
+## API Test Page
+- Access [http://localhost:8000/docs](http://localhost:8000/docs) after runnning the application
