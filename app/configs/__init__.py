@@ -22,6 +22,7 @@ class Settings(BaseSettings):
     DB_NAME: str
 
     REDUNDANT_RATE: float = 0.6
+    RELATED_POSTS_AT_ONCE: int = 5
 
     @property
     def DB_URL(self) -> str:
