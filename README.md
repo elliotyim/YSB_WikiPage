@@ -7,9 +7,9 @@
     - Put local.env file on the root path
     - Set environment variables
 3. Execute below command lines
-    - > $ pip install -r requirements.txt
-    - > $ uvicorn app.main:app --reload
+    - `$ pip install -r requirements.txt`
+    - `$ uvicorn app.main:app --reload`
 
 ## Testing
 
-- > $ pytest
+- `$ pytest`
