@@ -1,5 +1,6 @@
 from fastapi import Depends
 from sqlalchemy import or_, func, desc, select
+from sqlalchemy.exc import NoResultFound
 from sqlalchemy.orm import Session, joinedload
 
 from app.db import get_db
@@ -7,6 +8,8 @@ from app.db.models.post import Post
 from app.db.models.post_word import PostWord
 from app.db.models.word import Word
 from app.dto.post import response
+from app.exception import NotFoundException
+from app.exception.error_code import ErrorCode
 from app.utils.word_processor import WordProcessor
 
 
@@ -21,7 +24,10 @@ class PostCrud:
         return posts
 
     def find_post_with_post_words_by_post_id(self, post_id: int) -> Post:
-        post = self.db.query(Post).options(joinedload(Post.post_words)).filter(Post.id == post_id).one()
+        try:
+            post = self.db.query(Post).options(joinedload(Post.post_words)).filter(Post.id == post_id).one()
+        except NoResultFound:
+            raise NotFoundException(message="No such post exist", error_code=ErrorCode.NO_SUCH_POST_EXIST)
         return post
 
     def find_related_posts(self, base_post_id: int, word_ids: list[int], n: int) -> list[response.Post]:
