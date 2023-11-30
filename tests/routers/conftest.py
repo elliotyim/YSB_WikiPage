@@ -24,11 +24,8 @@ _SessionLocal = sessionmaker(bind=_engine)
 
 
 def local_get_db() -> Generator[Session, None, None]:
-    db = _SessionLocal()
-    try:
+    with _SessionLocal() as db:
         yield db
-    finally:
-        db.close()
 
 
 def local_get_settings() -> Settings:
