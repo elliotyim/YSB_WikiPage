@@ -31,6 +31,3 @@ class Settings(BaseSettings):
 
 def get_settings() -> Settings:
     return Settings(_env_file=f'{ROOT_PATH}/local.env', _env_file_encoding='utf-8')
-
-
-settings = get_settings()
